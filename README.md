@@ -12,7 +12,7 @@ Once the instances are fully up and running you should be able to see them on th
 
 ![Running Instances](images/running_instances.png)
 
-## Additional Items for each Node
+## Additional Items for each Node (as _root_ user)
 
 * Install Java 1.8 JDK (java-1.8.0-openjdk.x86_64)
 * Instal git (2.23.0) (optional)
@@ -30,3 +30,18 @@ Once the instances are fully up and running you should be able to see them on th
   </property>
 </configuration>
 ```
+* mkdir -p /usr/local/hadoop/hdfs/data
+* Create the _hadoop_ user and run:
+```
+chown hadoop.hadoop /usr/local/hadoop/hdfs/data
+chown -R hadoop.hadoop /var/applications
+```
+* Set up passwordless ssh for each node:
+```
+sudo su hadoop
+cd ~
+mkdir .ssh
+chmod 700 .ssh && cd .ssh
+ssh-keygen (run just on main node and just hit enter with each prompt)
+```
+* Copy the public key generated to the ~/.ssh/authorized_keys file
