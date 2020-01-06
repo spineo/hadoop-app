@@ -11,3 +11,22 @@ For this example, I will click on _Launch Instance_ and select an Amazon Linux t
 Once the instances are fully up and running you should be able to see them on the dashboard as shown in the screenshot below along with their Public DNS and IP (not shown). You should also be able to log on to any of these instances as _ec2-user_ from an SSH terminal using your private key or, since this feature is automatically enabled on Amazon Linux instances, using the EC2 Browser-based SSH connection.  
 
 ![Running Instances](images/running_instances.png)
+
+## Additional Items for each Node
+
+Install Java 1.8 JDK (java-1.8.0-openjdk.x86_64)
+git (2.23.0)
+mkdir /var/applications
+wget hadoop (v.2.10.0): wget http://apache-mirror.8birdsvideo.com/hadoop/common/hadoop-2.10.0/hadoop-2.10.0.tar.gz or other mirror (from the https://hadoop.apache.org/releases page) and run _tar xvf hadoop-2.10.0.tar.gz_
+mv hadoop-2.10.0 hadoop
+Edit _/var/applications/hadoop/etc/hadoop/hadoop-env.sh_:
+Replace export JAVA_HOME=${JAVA_HOME} with export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
+Add to the  _/var/applications/hadoop/etc/hadoop/core-site.xml_ configuration:
+```
+<configuration>
+  <property>
+    <name>fs.defaultFS</name>
+    <value><nnode>:9000</value>
+  </property>
+</configuration>
+```
