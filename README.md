@@ -19,7 +19,7 @@ Once the instances are fully up and running you should be able to see them on th
 * Java 1.8 JDK (java-1.8.0-openjdk.x86_64)
 * Git (2.23.0) (optional)
 
-### Set Hadoop
+### Hadoop Setup
 
 * mkdir /var/applications
 * wget hadoop (v.2.10.0): wget http://apache-mirror.8birdsvideo.com/hadoop/common/hadoop-2.10.0/hadoop-2.10.0.tar.gz or other mirror (from the https://hadoop.apache.org/releases page) and run _tar xvf hadoop-2.10.0.tar.gz_
@@ -35,7 +35,7 @@ Once the instances are fully up and running you should be able to see them on th
   </property>
 </configuration>
 ```
-* mkdir -p /usr/local/hadoop/hdfs/data
+* mkdir -p /usr/local/hadoop/hdfs/data && chown -R hadoop.hadoop /usr/local/hadoop/hdfs/data
 * Create the _hadoop_ user and run:
 ```
 chown hadoop.hadoop /usr/local/hadoop/hdfs/data
@@ -49,4 +49,35 @@ mkdir .ssh
 chmod 700 .ssh && cd .ssh
 ssh-keygen (run just on main node and just hit enter with each prompt)
 ```
-* Copy the public key generated to the ~/.ssh/authorized_keys file
+* Copy the public key generated to the _~/.ssh/authorized_keys_ file (and ensure access permissions are set to 644!)
+
+* Edit the _~/.ssh/config_ file (ensuring access permissions are set to 644 when done) to include the following:
+```
+Host MainNode
+    HostName HadoopMainNode
+    User hadoop
+    IdentityFile ~/.ssh/id_rsa
+
+Host DataNode1
+    HostName HadoopDataNode1
+    User hadoop
+    IdentityFile ~/.ssh/id_rsa
+
+Host DataNode2
+    HostName HadoopDataNode2
+    User hadoop
+    IdentityFile ~/.ssh/id_rsa
+```
+* Edit the /var/applications/hadoop/etc/hadoop/hdfs-site.xml file on the main node by adding the following configuration:
+```
+<configuration>
+  <property>
+    <name>dfs.replication</name>
+    <value>3</value>
+  </property>
+  <property>
+    <name>dfs.MainNode.name.dir</name>
+    <value>file:///usr/local/hadoop/hdfs/data</value>
+  </property>
+</configuration>
+```
