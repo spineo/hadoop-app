@@ -54,20 +54,23 @@ ssh-keygen (run just on main node and just hit enter with each prompt)
 * Edit the _~/.ssh/config_ file (ensuring access permissions are set to 644 when done) to include the following:
 ```
 Host MainNode
-    HostName HadoopMainNode
+    HostName <HadoopMainNodeHost>
     User hadoop
     IdentityFile ~/.ssh/id_rsa
 
 Host DataNode1
-    HostName HadoopDataNode1
+    HostName <HadoopDataNode1Host>
     User hadoop
     IdentityFile ~/.ssh/id_rsa
 
 Host DataNode2
-    HostName HadoopDataNode2
+    HostName <HadoopDataNode2Host>
     User hadoop
     IdentityFile ~/.ssh/id_rsa
 ```
+
+#### Setup the HDFS Properties on the Main Node
+
 * Edit the /var/applications/hadoop/etc/hadoop/hdfs-site.xml file on the main node by adding the following configuration:
 ```
 <configuration>
@@ -81,3 +84,51 @@ Host DataNode2
   </property>
 </configuration>
 ```
+
+#### Setup the MapReduce Properties on the Main Node
+
+* Copy the /var/applications/hadoop/etc/hadoop/mapred-site.xml.template to _mapred-site.xml_ in the same directory and edit to include:
+```
+<configuration>
+  <property>
+    <name>mapreduce.jobtracker.address</name>
+    <value><nnode><HadoopMainNodeHost>:54311</value>
+  </property>
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+  </property>
+</configuration>
+```
+
+#### Setup the YARN Properties on the MainNode:
+
+* Edit the _/var/applications/hadoop/etc/hadoop/yarn-site.xml_ to include the following:
+```
+<configuration>
+  <!-- Site specific YARN configuration properties -->
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value><HadoopMainNodeHost></value>
+  </property>
+</configuration>
+```
+
+### Stop and Re-starting AWS Instances
+
+_Note: If you stop/start any of the instances and have not set up a domain name you will need to update the public DNS in the following locations:_
+Main Node:
+~/.ssh/config
+/var/applications/hadoop/etc/hadoop/mapred-site.xml
+/var/applications/hadoop/etc/hadoop/yarn-site.xml
+
+Data Nodes:
+~/.ssh/config
