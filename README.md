@@ -125,8 +125,15 @@ Host DataNode2
 #### Setup Master and Slaves on the Main Node
 
 * Create a _/var/applications/hadoop/etc/hadoop/masters_ file and add the following:
+```
+<HadoopMainNodeHost>
+```
 
-
+Edit the  _/var/applications/hadoop/etc/hadoop/slaves_
+```
+<HadoopDataNode1Host>
+<HadoopDataNode2Host>
+```
 
 ### Stop and Re-starting AWS Instances
 
@@ -134,12 +141,7 @@ _Note: If you stop/start any of the instances and have not set up a domain name 
 
 * Main Node:
 ```
-~/.ssh/config
+~/.ssh/config (references to main and data nodes updated)
 /var/applications/hadoop/etc/hadoop/mapred-site.xml
 /var/applications/hadoop/etc/hadoop/yarn-site.xml
-```
-
-* Data Nodes:
-```
-~/.ssh/config
 ```
