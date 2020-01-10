@@ -37,7 +37,7 @@ Once the instances are fully up and running you should be able to see them on th
 <configuration>
   <property>
     <name>fs.defaultFS</name>
-    <value><nnode>:9000</value>
+    <value><HadoopMainNodeHost>:9000</value>
   </property>
 </configuration>
 ```
