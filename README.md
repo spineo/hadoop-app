@@ -21,7 +21,7 @@ Once the instances are fully up and running you should be able to see them on th
 
 ### Hadoop Setup
 
-#### Install the Application and Configure JAVA_HOME (all nodes)
+#### Install the Application and Configure JAVA_HOME
 
 * mkdir /var/applications
 
@@ -142,7 +142,21 @@ Edit the  _/var/applications/hadoop/etc/hadoop/slaves_
 <HadoopDataNode2Host>
 ```
 
-### Stop and Re-starting AWS Instances
+#### Start the Hadoop Cluster
+
+#### Format the HDFS File System on the Main Node
+ ```
+cd /var/applications
+./hadoop/bin/hdfs namenode -format
+```
+
+#### Start the Hadoop Cluster
+```
+./hadoop/sbin/start-dfs.sh
+./hadoop/sbin/start-dfs.sh
+```
+
+## Stop and Re-starting AWS Instances
 
 _Note: If you stop/start any of the instances and have not set up a domain name you will need to update the public DNS in the following locations:_
 
@@ -151,4 +165,6 @@ _Note: If you stop/start any of the instances and have not set up a domain name 
 ~/.ssh/config (references to main and data nodes updated)
 /var/applications/hadoop/etc/hadoop/mapred-site.xml
 /var/applications/hadoop/etc/hadoop/yarn-site.xml
+/var/applications/hadoop/etc/hadoop/masters
+/var/applications/hadoop/etc/hadoop/slaves
 ```
