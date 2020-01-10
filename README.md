@@ -21,11 +21,17 @@ Once the instances are fully up and running you should be able to see them on th
 
 ### Hadoop Setup
 
+#### Install the Application and Configure JAVA_HOME (all nodes)
+
 * mkdir /var/applications
+
 * wget hadoop (v.2.10.0): wget http://apache-mirror.8birdsvideo.com/hadoop/common/hadoop-2.10.0/hadoop-2.10.0.tar.gz or other mirror (from the https://hadoop.apache.org/releases page) and run _tar xvf hadoop-2.10.0.tar.gz_
+
 * mv hadoop-2.10.0 hadoop
+
 * Edit _/var/applications/hadoop/etc/hadoop/hadoop-env.sh_:
     Replace export JAVA_HOME=${JAVA_HOME} with export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
+    
 * Add to the  _/var/applications/hadoop/etc/hadoop/core-site.xml_ configuration as shown below:
 ```
 <configuration>
@@ -36,6 +42,7 @@ Once the instances are fully up and running you should be able to see them on th
 </configuration>
 ```
 * mkdir -p /usr/local/hadoop/hdfs/data && chown -R hadoop.hadoop /usr/local/hadoop/hdfs/data
+
 * Create the _hadoop_ user and run:
 ```
 chown hadoop.hadoop /usr/local/hadoop/hdfs/data
