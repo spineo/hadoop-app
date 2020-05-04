@@ -176,6 +176,10 @@ done
 
 ![Hadoop Cluster](images/cluster.png)
 
+You can also view the data nodes in the DFS Health UI (http://<HadoopMainNode>:50070/dfshealth.html#tab-datanode) as shown in the example screenshot below:
+
+![DFS Health UI](images/dfs-health-ui.png)
+
 ## Stop and Re-starting AWS Instances
 
 _Note: If you stop/start any of the instances and have not set up a domain name you will need to update the public DNS in the following locations:_
