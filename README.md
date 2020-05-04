@@ -36,7 +36,7 @@ Once the instances are fully up and running you should be able to see them on th
 ```
 <configuration>
   <property>
-    <name>fs.defaultFS</name>
+    <name>fs.default.name</name>
     <value><HadoopMainNodeHost>:9000</value>
   </property>
 </configuration>
@@ -126,6 +126,14 @@ Host DataNode2
     <name>yarn.resourcemanager.hostname</name>
     <value><HadoopMainNodeHost></value>
   </property>
+  <property>
+    <name>yarn.resourcemanager.scheduler.address</name>
+	<value><HadoopMainNodeHost>:8030</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.resource-tracker.address</name>
+	<value><HadoopMainNodeHost>:8031</value>
+  </property>
 </configuration>
 ```
 
@@ -142,7 +150,7 @@ Edit the  _/var/applications/hadoop/etc/hadoop/slaves_
 <HadoopDataNode2Host>
 ```
 
-#### Start the Hadoop Cluster
+### Start the Hadoop Cluster
 
 #### Format the HDFS File System on the Main Node
  ```
@@ -150,11 +158,23 @@ cd /var/applications
 ./hadoop/bin/hdfs namenode -format
 ```
 
+#### Copy the XML Configuration Files to the Mirror Slaves Directories
+```
+cd $HADOOP_HOME/etc/hadoop
+for i in `cat slaves`; do
+    scp *xml $i:$HADOOP_HOME/etc/hadoop;
+done
+```
+
 #### Start the Hadoop Cluster
 ```
 ./hadoop/sbin/start-dfs.sh
-./hadoop/sbin/start-dfs.sh
+./hadoop/sbin/start-yarn.sh
 ```
+
+#### Verify that Nodes are Visible/Active in the UI (screenshot below)
+
+![Hadoop Cluster](images/cluster.png)
 
 ## Stop and Re-starting AWS Instances
 
