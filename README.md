@@ -4,6 +4,8 @@ In this example I will be setting up an [Apache Hadoop](https://hadoop.apache.or
 
 The setup involves a main node and two data nodes and use Hadoop v2.10.0 available from one of the mirros at https://hadoop.apache.org/releases.html
 
+Note that, as an extra precaution, I have ultimately decided that this applications cluster should be configured to use the _Private DNS Names_. In addition, I have set up SSH tunnels on my /32 network mask for viewing the Web applications instead of exposing the public DNS names and ports (the security group generated dynamically with Ansible is discussed [here](https://github.com/spineo/ansible-aws-instance))
+
 ## Launch the Instances
 
 For this example, I will click on _Launch Instance_ and select an Amazon Linux t2.micro 64-bit (x86) configuration (Free tier eligible). For now I will not perform additional configurations of the instances, add storage, or attach any security group(s) but I will add a tag (under the _Add Tags_ section) with a key _Name_ for each of the three instances and values _HadoopMainNode_, _HadoopDataNode1_, and _HadoopDataNode2_ respectively. As I launch each instance I will be using a pre-existing key pair (i.e., certificate).
