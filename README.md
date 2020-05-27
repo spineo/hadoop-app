@@ -198,4 +198,4 @@ _Note: If you stop/start any of the instances and have not set up a domain name 
 
 ## Automatic Deployment of the Configuration and Daemon Restart using Ansible
 
-This [README](https://github.com/spineo/accumulo-hdfs-zookeeper/blob/master/README.md) contains instructions using Ansible (i.e., using the _hadoop.yml_ playbook) for the automated deployment of the configuration and the DFS/YARN restart. Using this playbook will automate the process if the configuration (i.e., Public DNS/IP) changes.
+This [README](https://github.com/spineo/ansible-aws-instance/blob/master/README.md) contains instructions using Ansible (i.e., using the _hadoop_conf.yml_ and _hadoop_daemons.yml_ playbooks) for the automated deployment of the configuration and the DFS/YARN restart. Using these playbooks will automate the process if the configuration (i.e., Public DNS/IP or other parameters) changes.
